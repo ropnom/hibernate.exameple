@@ -1,5 +1,6 @@
 package HibernateRelations;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -27,14 +28,17 @@ public class CreateDatabase {
 
 		new SchemaExport(config).create(true, true);
 
-		SessionFactory factory = config.buildSessionFactory();
-		Session sesion = factory.getCurrentSession();
+		// Session sesion = factory.getCurrentSession();
 
-		LLenardatabase(sesion);
+		LLenardatabase(config);
+		UpdateDDBB(config);
 
 	}
 
-	private static void LLenardatabase(Session sesion) {
+	private static void LLenardatabase(AnnotationConfiguration config) {
+
+		SessionFactory factory = config.buildSessionFactory();
+		Session sesion = factory.openSession();
 		sesion.beginTransaction();
 
 		// Create objeto
@@ -77,10 +81,6 @@ public class CreateDatabase {
 		// Update owner
 		sesion.update(owner);
 
-		// change objeto propierties
-		obj2.setPrize(10.50);
-		obj2.setDescription("Estructura de madera o aluminio normlamente planificada para que una persona se siente.");
-
 		obj3.setPrize(10000);
 
 		// make change DDBB
@@ -88,21 +88,57 @@ public class CreateDatabase {
 		sesion.getTransaction().commit();
 		// sesion.close();
 		System.out.println("/****************** FIN");
+		sesion.close();
 
 	}
 
-//	private static void UpdateDDBB(Session sesion) {
-//
-//		// wait to see the change in lastupdate obj3
-//		try {
-//			Thread.sleep(5000);
-//		} catch (Exception e) {
-//
-//		}
-//		// update DDBB
-//		sesion.update(obj2);
-//		sesion.update(obj3);
-//		System.out.println("Identificacion: " + obj2.getIdentificator() + " Nombre: " + obj2.getName() + " Descripcion: " + obj2.getDescription() + " Precio: " + obj2.getPrize());
-//
-//	}
+	private static void UpdateDDBB(AnnotationConfiguration config) {
+
+		System.out.println();
+		System.out.println("/****************** UPDATE");
+		// wait to see the change in lastupdate obj3
+		try {
+			Thread.sleep(5000);
+		} catch (Exception e) {
+
+		}
+		SessionFactory factory = config.buildSessionFactory();
+		Session sesion = factory.openSession();
+		sesion.beginTransaction();
+
+		// Search
+
+		Query q = sesion.createQuery("from Objeto2 where identificator = 1");
+		Objeto2 obj2 = (Objeto2) q.uniqueResult();
+
+		if (obj2 != null) {
+			// change objeto propierties
+			obj2.setPrize(12.50);
+			obj2.setDescription("Estructura de madera o aluminio normlamente planificada para que una persona se siente.Mod");
+			sesion.update(obj2);
+			sesion.getTransaction().commit();
+			System.out.println("Identificacion: " + obj2.getIdentificator() + " Nombre: " + obj2.getName() + " Descripcion: " + obj2.getDescription() + " Precio: " + obj2.getPrize()+" Lastupdate: "+ obj2.getLastupdate());
+
+			
+		}
+
+		q = sesion.createQuery("from Owner where identificator = 1");
+		Owner owner = (Owner) q.uniqueResult();
+		System.out.println("Nombre: " + owner.getName() + " Identificator: " + owner.getIdentificator() + " Objetos: " + owner.getMyobjectsList().size() + " Objetos2: " + owner.getMyobject2sList().size());
+
+		for (int i = 0; i < owner.getMyobjectsList().size(); i++) {
+
+			System.out.println("Identificacion: " + owner.getMyobjectsList().get(i).getIdentificator() + " Nombre: " + owner.getMyobjectsList().get(i).getName() + " Descripcion: " + owner.getMyobjectsList().get(i).getDescription() + " Precio: " + owner.getMyobjectsList().get(i).getPrize());
+
+		}
+		for (int i = 0; i < owner.getMyobject2sList().size(); i++) {
+
+			System.out.println("Identificacion: " + owner.getMyobject2sList().get(i).getIdentificator() + " Nombre: " + owner.getMyobject2sList().get(i).getName() + " Descripcion: " + owner.getMyobject2sList().get(i).getDescription() + " Precio: " + owner.getMyobject2sList().get(i).getPrize() + " Last Update: " + owner.getMyobject2sList().get(i).getLastupdate());
+
+		}
+
+		sesion.close();
+		System.out.println("/****************** FIN");
+
+	}
 }

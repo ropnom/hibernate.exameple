@@ -11,50 +11,50 @@ public class CreateDatabase {
 		System.out.println("ARRANCOOO\n\n\n\n\n***********\n\n\n\n\n***********\n\n\n\n\n***********");
 		Arranque();
 	}
-	
+
 	public static void Arranque() {
 
 		// Creamos las tablas
 		AnnotationConfiguration config = new AnnotationConfiguration();
-		
-		
+
 		config.addAnnotatedClass(Objeto.class);
-		
-		
+
 		config.configure();
 
 		new SchemaExport(config).create(true, true);
 
 		SessionFactory factory = config.buildSessionFactory();
-		Session sesion = factory.getCurrentSession();
+		// Session sesion = factory.getCurrentSession();
+		Session sesion = factory.openSession();
 
 		LLenardatabase(sesion);
 
 	}
+
 	private static void LLenardatabase(Session sesion) {
 		sesion.beginTransaction();
-		
-		//Create objeto		
+
+		// Create objeto
 		Objeto obj = new Objeto("Mesa", "Sirve como estructura basica para proceos humanso como comidas o escritura", 60.80);
 		Objeto obj2 = new Objeto("Silla", "Sirve como estructura basica para sentarse", 20.80);
-		
-		//Save objeto in DDBB
-		
+
+		// Save objeto in DDBB
+
 		sesion.save(obj);
 		sesion.save(obj2);
-		System.out.println("Identificacion: "+obj.getIdentificator()+ " Nombre: "+obj.getName()+ " Descripcion: "+ obj.getDescription()+" Precio: "+obj.getPrize());
-		System.out.println("Identificacion: "+obj2.getIdentificator()+ " Nombre: "+obj2.getName()+ " Descripcion: "+ obj2.getDescription()+" Precio: "+obj2.getPrize());
-		
-		//change objeto propierties
+		System.out.println("Identificacion: " + obj.getIdentificator() + " Nombre: " + obj.getName() + " Descripcion: " + obj.getDescription() + " Precio: " + obj.getPrize());
+		System.out.println("Identificacion: " + obj2.getIdentificator() + " Nombre: " + obj2.getName() + " Descripcion: " + obj2.getDescription() + " Precio: " + obj2.getPrize());
+
+		// change objeto propierties
 		obj2.setPrize(10.50);
 		obj2.setDescription("Estructura de madera o aluminio normlamente planificada para que una persona se siente.");
-		
-		//update DDBB
+
+		// update DDBB
 		sesion.update(obj2);
-		System.out.println("Identificacion: "+obj2.getIdentificator()+ " Nombre: "+obj2.getName()+ " Descripcion: "+ obj2.getDescription()+" Precio: "+obj2.getPrize());
-		
+		System.out.println("Identificacion: " + obj2.getIdentificator() + " Nombre: " + obj2.getName() + " Descripcion: " + obj2.getDescription() + " Precio: " + obj2.getPrize());
+
 		sesion.getTransaction().commit();
-		// sesion.close();
+		sesion.close();
 		System.out.println("/****************** FIN");
 
 	}

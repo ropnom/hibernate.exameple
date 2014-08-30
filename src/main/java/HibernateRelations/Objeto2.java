@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -23,17 +25,24 @@ public class Objeto2 {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	protected long identificator;
 
-	@Column(nullable=false)
-	protected String name;	
+	@Column(nullable = false)
+	protected String name;
 	protected String description;
 	protected double prize = 0;
-	
+
 	protected long owner;
-	
-	@Temporal(TemporalType.TIMESTAMP)  
-    @Column(name = "LastUpdate", insertable = false, columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
+
+	// thats annotations make the field inicializated and update with the local
+	// time only for mysql
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name = "LastUpdate", insertable = false, columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
 	protected Date lastupdate;
 
+	// For update from hiberante is necesary:
+	@PreUpdate
+	void onPersist() {
+		this.lastupdate = new Date();
+	}
 
 	public Objeto2() {
 
@@ -53,7 +62,6 @@ public class Objeto2 {
 		this.prize = prize;
 		this.description = description;
 		this.lastupdate = new Date();
-
 
 	}
 
