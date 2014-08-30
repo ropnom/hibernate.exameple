@@ -1,5 +1,6 @@
 package HibernateRelations;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -7,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,14 +36,13 @@ public class Objeto2 {
 	// thats annotations make the field inicializated and update with the local
 	// time only for mysql
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "LastUpdate", insertable = false, columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
+	@Column(name = "LastUpdate", insertable = false,columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
 	protected Date lastupdate;
 
 	// For update from hiberante is necesary:
-	@PreUpdate
-	void onPersist() {
-		this.lastupdate = new Date();
-	}
+	
+	//DON'T WORK
+	
 
 	public Objeto2() {
 
@@ -101,6 +101,10 @@ public class Objeto2 {
 		return prize;
 	}
 
+	public void setPrize(double prize) {
+		this.prize = prize;
+	}
+
 	public Date getLastupdate() {
 		return lastupdate;
 	}
@@ -108,9 +112,6 @@ public class Objeto2 {
 	public void setLastupdate(Date lastupdate) {
 		this.lastupdate = lastupdate;
 	}
-
-	public void setPrize(double prize) {
-		this.prize = prize;
-	}
+	
 
 }
