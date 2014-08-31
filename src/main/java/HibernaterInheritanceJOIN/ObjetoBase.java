@@ -1,4 +1,4 @@
-package HibernaterInheritance;
+package HibernaterInheritanceJOIN;
 
 import java.util.Date;
 
@@ -9,13 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 //Hibernate annotation, to insert the objet in the BBDD
 // Anotacionde hibernate, indica que el objeto tiene que ser incluido en la BBDD
 @Entity
-@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@Table(name = "ObjetoBase", catalog = "hibernate")
+@Inheritance(strategy=InheritanceType.JOINED)
 public class ObjetoBase {
 
 	// Fields, Variables del objeto

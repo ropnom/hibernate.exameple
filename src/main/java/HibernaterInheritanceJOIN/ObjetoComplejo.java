@@ -1,4 +1,4 @@
-package HibernaterInheritance;
+package HibernaterInheritanceJOIN;
 
 import java.util.Date;
 
