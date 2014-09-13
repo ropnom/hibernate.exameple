@@ -1,21 +1,23 @@
 package HibernateRelations;
 
-import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import javax.persistence.PostUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 //Hibernate annotation, to insert the objet in the BBDD
 // Anotacionde hibernate, indica que el objeto tiene que ser incluido en la BBDD
 @Entity
+//@EntityListeners( LastUpdateListener.class )
+@EntityListeners( Objeto2.class )
 public class Objeto2 {
 
 	// Fields, Variables del objeto
@@ -35,6 +37,7 @@ public class Objeto2 {
 
 	// thats annotations make the field inicializated and update with the local
 	// time only for mysql
+	@Basic
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "LastUpdate", insertable = false,columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
 	protected Date lastupdate;
@@ -64,6 +67,16 @@ public class Objeto2 {
 		this.lastupdate = new Date();
 
 	}
+	
+	
+	
+	@PostUpdate
+	private void someLateUpdateWorking() {
+       System.out.println("REalizado un UPDATE a las: "+ new Date());
+	}
+	
+	
+	
 
 	public long getIdentificator() {
 		return identificator;

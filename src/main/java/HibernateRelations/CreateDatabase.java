@@ -113,7 +113,7 @@ public class CreateDatabase {
 
 		if (obj2 != null) {
 			// change objeto propierties
-			obj2.setPrize(12.50);
+			obj2.setPrize(120.50);
 			obj2.setDescription("Estructura de madera o aluminio normlamente planificada para que una persona se siente.Mod");
 			sesion.update(obj2);
 			sesion.getTransaction().commit();
