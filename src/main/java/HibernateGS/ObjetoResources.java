@@ -8,13 +8,14 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Table(name = "ObjetoResources", catalog = "hibernate")
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy=InheritanceType.JOINED)
 @Entity
 public class ObjetoResources extends ObjetoPlus {
 
 	protected long Metal = 0;
 	protected long Cristal = 0;
 	protected long deuterio = 0;
+	
 
 	public ObjetoResources() {
 

@@ -10,9 +10,9 @@ import javax.persistence.Table;
 
 //Hibernate annotation, to insert the objet in the BBDD
 // Anotacionde hibernate, indica que el objeto tiene que ser incluido en la BBDD
-@Table(name = "ObjetoPlus", catalog = "hibernate")
+//@Table(name = "ObjetoPlus", catalog = "hibernate")
 @Entity
-@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@Inheritance(strategy=InheritanceType.JOINED)
 public class ObjetoPlus extends ObjetoElement {
 
 	// Fields, Variables del objeto

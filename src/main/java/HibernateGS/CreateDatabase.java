@@ -19,8 +19,8 @@ public class CreateDatabase {
 		// Creamos las tablas
 		AnnotationConfiguration config = new AnnotationConfiguration();
 
-		//config.addAnnotatedClass(ObjetoElement.class);
-		//config.addAnnotatedClass(ObjetoPlus.class);
+//		config.addAnnotatedClass(ObjetoElement.class);
+//		config.addAnnotatedClass(ObjetoPlus.class);
 		config.addAnnotatedClass(ObjetoResources.class);
 
 		config.configure();
@@ -31,7 +31,7 @@ public class CreateDatabase {
 		// Session sesion = factory.getCurrentSession();
 		Session sesion = factory.openSession();
 
-		//LLenardatabase(sesion);
+		LLenardatabase(sesion);
 
 	}
 
@@ -39,8 +39,8 @@ public class CreateDatabase {
 		sesion.beginTransaction();
 
 		// Create objeto
-		ObjetoElement obj = new ObjetoElement("Mesa", "Sirve como estructura basica para proceos humanso como comidas o escritura", 60.80);
-		ObjetoElement obj2 = new ObjetoElement("Silla", "Sirve como estructura basica para sentarse", 20.80);
+		ObjetoPlus obj = new ObjetoPlus("Mesa", "Sirve como estructura basica para proceos humanso como comidas o escritura", 60.80);
+		ObjetoPlus obj2 = new ObjetoPlus("Silla", "Sirve como estructura basica para sentarse", 20.80);
 		
 		ObjetoPlus obj5 = new ObjetoPlus("Coca","Cocaina de la buena unos pocos gramos",60.00);
 		obj5.Put("en la 027 para los aeronauticos", new Date(2013, 11, 5), true);
