@@ -18,7 +18,7 @@ public class ObjetoResources extends ObjetoPlus {
 	
 
 	public ObjetoResources() {
-
+		super();
 	}
 
 	public ObjetoResources(String name, String description, float prize, String direccion, Date entrega, boolean stock) {
